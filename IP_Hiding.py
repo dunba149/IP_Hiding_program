@@ -2,7 +2,6 @@ import requests
 
 
 def get_public_ip(session=None):
-    """Get the externally visible public IP address."""
     url = "https://api.ipify.org?format=json"
 
     try:
@@ -18,18 +17,9 @@ def get_public_ip(session=None):
         return f"Error: {e}"
 
 
-# ----------------------------------------
-# 1. Get your normal public IP
-# ----------------------------------------
-
 original_ip = get_public_ip()
 
 print("Your Real Public IP:", original_ip)
-
-
-# ----------------------------------------
-# 2. Create a Tor-proxied session
-# ----------------------------------------
 
 tor_session = requests.Session()
 
@@ -39,20 +29,12 @@ tor_session.proxies = {
 }
 
 
-# ----------------------------------------
-# 3. Get your IP through Tor
-# ----------------------------------------
-
 print("Checking IP through Tor...")
 
 tor_ip = get_public_ip(tor_session)
 
 print("Your Tor IP:", tor_ip)
 
-
-# ----------------------------------------
-# 4. Compare the addresses
-# ----------------------------------------
 
 if original_ip != tor_ip and not tor_ip.startswith("Error"):
     print("\nSUCCESS!")
